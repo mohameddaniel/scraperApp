@@ -21,26 +21,15 @@ const { width } = Dimensions.get('window');
 const itemsPerPage = 6;
 
 const HomeScreen = (): React.JSX.Element => {
-  const rowData = groupData(filterData, 3); 
+  const rowData = groupData(prodData, 3); 
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(rowData.length / itemsPerPage);
   const visiblePages = 4;
   const [showPagination, setShowPagination] = useState(false);
   const scrollOffset = useRef(0); 
-  const [searchText,setSearchText] = useState<string>('');
-  const [filterData,setFilterData] = useState<Product[]>([])
 
-  useEffect(()=>{
-    if(searchText){
-      const filter = prodData?.filter((item)=>{
-        const nameOfProduct:string = `${item.brand || ''}`.trim().toLowerCase();
-        return nameOfProduct.includes(searchText.toLowerCase())
-      })
-      setFilterData(filter)
-    }else{
-      setFilterData(prodData)
-    }
-  },[searchText])
+
+
   
   useEffect(()=>{
     const backAction = () =>{
@@ -91,7 +80,6 @@ const HomeScreen = (): React.JSX.Element => {
         <Searchbar
           placeholder="Rechercher par nom ou marque"
           style={styles.searchbar}
-          onChangeText={(txt)=>setSearchText(txt)}
         />
         <AntDesign name="filter" size={24} color="#0c4a6e" style={styles.filterIcon} />
       </View>
